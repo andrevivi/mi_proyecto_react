@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Parlante Bluetooth",
+        "price": 30.99,
+        "description": "Potencia y sonido envolvente en un diseño compacto y moderno. Este parlante Bluetooth JBL ofrece graves profundos, conexión inalámbrica rápida y batería de larga duración para disfrutar música donde quieras. Ideal para reuniones, exteriores o uso diario en casa.",
+        "image": "/img/pexels-9044641-9767549.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Smart TV 55 pulgadas",
+        "price": 19.99,
+        "description": "Pantalla HD con colores vibrantes\nDiseño delgado y elegante\nCompatible con múltiples dispositivos\nExcelente calidad de imagen\nIdeal para streaming y gaming",
+        "image": "/img/pexels-cottonbro-8072521.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Smartphone Samsung + iPhone Premium",
+        "price": 5.99,
+        "description": "Dos referentes en tecnología móvil reunidos en una propuesta premium. Equipos diseñados para ofrecer rendimiento, cámaras avanzadas y experiencia fluida para trabajo, redes sociales y entretenimiento.",
+        "image": "/img/pexels-igchandankumar-16442035.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Juego de Comedor de Madera",
+        "price": 15.99,
+        "description": "Elegancia y comodidad para transformar tu comedor. Mesa redonda con sillas tapizadas de excelente terminación, ideal para reuniones familiares y espacios modernos.",
+        "image": "/img/pexels-eimi-vergara-441807211-27952969.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Sofá Seccional de Cuero",
+        "price": 25.99,
+        "description": "Diseño contemporáneo y comodidad excepcional. Este sofá seccional de cuero ofrece un espacio amplio para relajarse, con un estilo elegante que complementa cualquier sala de estar.",
+        "image": "/img/pexels-marko-stojkovic-1187731-17264275.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Lámpara de Pie Moderna",
+        "price": 9.99,
+        "description": "Iluminación funcional y estilo contemporáneo. Esta lámpara de pie moderna es perfecta para crear un ambiente acogedor en tu sala de estar o dormitorio, con un diseño elegante que complementa cualquier decoración.",
+        "image": "/img/pexels-kseniachernaya-6999647.jpg"
+    }
+]
