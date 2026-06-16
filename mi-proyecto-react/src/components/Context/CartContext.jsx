@@ -19,11 +19,17 @@ export const CartProvider = ({ children }) => {
 
     const addItem = (item) => {
         if (isInCart(item)) {
-            alert("El producto ya existe en el carrito");
+            const updatedCart = cart.map((element) =>
+                element.id === item.id
+                    ? { ...element, quantity: (element.quantity || 1) + 1 }
+                    : element
+            );
+            setCart(updatedCart);
+            alert("Cantidad actualizada en el carrito");
             return;
         }
 
-        setCart([...cart, item]);
+        setCart([...cart, { ...item, quantity: 1 }]);
         alert("Producto agregado al carrito");
     };
 
@@ -33,16 +39,19 @@ export const CartProvider = ({ children }) => {
         alert("Producto eliminado del carrito");
     };
 
-   const clearCart = () => {
-    setCart([]);
-};
+    const clearCart = () => {
+        setCart([]);
+    };
 
-const getTotalItems = () => {
-    return cart.length;
-};
-const getCartTotal = () => {
-    return cart.reduce((acc, element) => acc + element.price, 0);
-};
+    const getTotalItems = () => {
+        return cart.reduce((acc, element) => acc + (element.quantity || 1), 0);
+    };
+    const getCartTotal = () => {
+        return cart.reduce(
+            (acc, element) => acc + element.price * (element.quantity || 1),
+            0
+        );
+    };
 const checkout = () => {
     alert("Compra realizada con éxito");
     clearCart();

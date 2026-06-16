@@ -1,14 +1,51 @@
 .card {
-    width: 20rem;
+    width: 18rem;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
-
-    gap:1rem;
-    padding-bottom:  1rem;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
 }
 
 .card img {
     width: 100%;
-    height: 20rem;
+    height: 15rem;
     object-fit: cover;
+    border-radius: 10px;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.card p {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    margin: 0;
+    color: #444;
+}
+
+.card > p:not(:last-child) {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.2rem;
+}
+
+.card p:last-child {
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+
+    .card img {
+        height: 12rem;
+    }
 }
