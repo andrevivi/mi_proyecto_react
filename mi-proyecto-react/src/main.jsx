@@ -3,15 +3,17 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx';
 import { BrowserRouter } from "react-router-dom";
-import { CartProvider } from "./components/Context/CartContext";
-
+import { CartProvider } from "./components/Context/CartContext.jsx";
+import { AuthProvider } from "./components/Context/AuthContext.jsx";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+     <AuthProvider>
       <CartProvider>
         <App />
       </CartProvider>
+      </AuthProvider>
       
     </BrowserRouter>
   </StrictMode>,
