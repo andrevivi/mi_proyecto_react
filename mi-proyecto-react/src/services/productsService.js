@@ -11,59 +11,72 @@ import { db } from "../firebase/config";
 
 const productsRef = collection(db, "products");
 
-export const getProducts = async (category) => {
+const getFallbackProducts = async () => {
+    try {
+        const response = await fetch("/data/products.json");
+        if (!response.ok) {
+            return [];
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error al cargar productos de respaldo: ", error);
+        return [];
+    }
+};
+
+export const getProducts = async () => {
     try {
         const snapshot = await getDocs(productsRef);
+        const products = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-        const productsFormat = snapshot.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
-        });
-        return productsFormat;
-        } catch (error) {
-            console.error("Error al obtener los productos: ", error);
-            return [];
+        if (products.length > 0) {
+            return products;
+        }
+    } catch (error) {
+        console.error("Error al obtener los productos: ", error);
     }
+
+    return getFallbackProducts();
 };
 
 export const getProductById = async (id) => {
     try {
-        const productsRef = doc(db, "products", id);
-
-        const snapshot = await getDoc(productsRef);
+        const productRef = doc(db, "products", id);
+        const snapshot = await getDoc(productRef);
 
         if (snapshot.exists()) {
-            const product = { id: snapshot.id, ...snapshot.data() };
-            console.log("Doc: ", product);
-            return product;
-        } else {
-            return null;
+            return { id: snapshot.id, ...snapshot.data() };
         }
     } catch (error) {
         console.error("Error al obtener el producto por id: ", error);
-        return null;
     }
+
+    const fallbackProducts = await getFallbackProducts();
+    return fallbackProducts.find((product) => product.id?.toString() === id?.toString()) || null;
 };
 
 export const getProductsByCategory = async (category) => {
     try {
-        let queryRef = productsRef;
-
-        if (category) {
-            queryRef = query(productsRef, where("category", "==", category));
-        } else {
-            queryRef = productsRef;
-        }
+        const queryRef = category
+            ? query(productsRef, where("category", "==", category))
+            : productsRef;
 
         const snapshot = await getDocs(queryRef);
+        const products = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-        const productsFormat = snapshot.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
-        });
-        return productsFormat;
+        if (products.length > 0) {
+            return products;
+        }
     } catch (error) {
         console.error("Error al filtrar productos: ", error);
-        return [];
     }
+
+    const fallbackProducts = await getFallbackProducts();
+    if (!category) {
+        return fallbackProducts;
+    }
+
+    return fallbackProducts.filter((product) => product.category === category);
 };
 
 export const createProduct = async (productData) => {

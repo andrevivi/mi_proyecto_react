@@ -9,7 +9,7 @@ import { createProduct } from "../../services/productsService";
 export const ProductFormContainer = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState({});
+    const [errors, setErrors] = useState({});
     const [file, setFile] = useState(null);
     const [product, setProduct] = useState({
         name: "",
@@ -18,14 +18,14 @@ export const ProductFormContainer = () => {
         category: "",
     });
 
-    const hadleChange = (e) => {
-        const {name, value} = e.target;
-        setProduct({...product, [name]: value});
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProduct({ ...product, [name]: value });
     };
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0] || null;
-        setFile(file);
+        const selectedFile = e.target.files[0] || null;
+        setFile(selectedFile);
     };
 
     const handleSubmit = async (e) => {
@@ -34,27 +34,28 @@ export const ProductFormContainer = () => {
         setErrors({});
         setLoading(true);
 
-        const newErrors = validateProduct({... product, file});
+        const newErrors = validateProduct({ ...product, file });
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             setLoading(false);
             return;
         }
+
         try {
             const imageUrl = await uploadImage(file);
 
             const productData = {
                 ...product,
                 price: parseFloat(product.price),
-                image:imageUrl,
+                image: imageUrl,
             };
             const id = await createProduct(productData);
 
-            setProduct({name: "", price: "", category: "", description: ""});
+            setProduct({ name: "", price: "", category: "", description: "" });
             setFile(null);
-            navigate(`/success/${id}`,{replace:true}); 
+            navigate(`/admin/products/success/${id}`, { replace: true });
         } catch (error) {
-            setError({general: error.message});
+            setErrors({ general: error.message });
         } finally {
             setLoading(false);
         }
@@ -62,13 +63,13 @@ export const ProductFormContainer = () => {
 
     return (
         <ProductFormUI
-        product={product}
-        errors={errors}
-        loading={loading}
-        onChange={handlechange}
-        onFileChange={hsndleFileChange}
-        onSubmit={handleSubmit}
+            product={product}
+            errors={errors}
+            loading={loading}
+            onChange={handleChange}
+            onFileChange={handleFileChange}
+            onSubmit={handleSubmit}
         />
     );
 };
-       
+
